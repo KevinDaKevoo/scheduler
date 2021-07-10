@@ -9,10 +9,14 @@ import useVisualMode from "hooks/useVisualMode"
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const DELETING = "DELETING";
+const SAVING = "SAVING";
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  
   function onAdd() {
     transition(CREATE)
   }
@@ -27,9 +31,15 @@ export default function Appointment(props) {
       interviewer
 
     };
+    transition(SAVING)
     props.bookInterview(props.id, interview)
-    transition(SHOW)
+      .then(() => {transition(SHOW)})
 
+  }
+
+  function onDelete() {
+
+    transition(DELETING)
   }
     return (
       <article className="appointment">
