@@ -73,12 +73,15 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    console.log(id, interview);
-
     setState({
       ...state,
       appointments,
     })
+    const promise = axios.put(`/api/appointments/${id}`, appointment)
+    console.log(id, interview);
+
+    
+    return promise;
   }
 
 
