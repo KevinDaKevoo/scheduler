@@ -21,13 +21,15 @@ export default function Form(props) {
     props.onSave(name, interviewer)
   };
 
-  const reset = function() {
-    setError(null);
+  const reset = () => {
     setName('');
     setInterviewer(null);
+  }
+  const cancel = () => {
+    reset();
     props.onCancel();
-  };
-
+  }
+ 
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -46,7 +48,7 @@ export default function Form(props) {
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button onClick={reset} danger>Cancel</Button>
+          <Button onClick={cancel} danger>Cancel</Button>
           <Button onClick={validate} confirm>Save</Button>
         </section>
       </section>
