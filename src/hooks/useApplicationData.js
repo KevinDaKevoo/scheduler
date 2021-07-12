@@ -9,6 +9,7 @@ const [state, setState] = useState({
   interviewers: {}
 });
 const setDay = day => setState({ ...state, day });
+const setDays = days => setState(prev => ({...prev, days}));
 const setAppointments = appointments => setState(prev => ({...prev, appointments}));
 useEffect(() => {
   const daysURL = 'api/days';
@@ -43,8 +44,11 @@ function bookInterview(id, interview) {
     ...state,
     appointments,
   })
-  return axios.put(`/api/appointments/${id}`, appointment)
-  .then(() => setAppointments(appointments))
+  return axios.put(`/api/appointments/${id}`, { interview })
+    .then(() => {
+      updateSpots(id, true, appointment.interview !== null);
+      setAppointments(appointments)
+    })
 }
 
 function cancelInterview(id) {
@@ -61,9 +65,26 @@ function cancelInterview(id) {
     appointments, 
   });
   return axios.delete(`api/appointments/${id}`, appointments[id])
+    .then(()=>{
+      updateSpots(id, false);
+      setAppointments(appointments);
+    })
 }
 
-
+const updateSpots = (id, booking, editing) => {
+  for (const [index, day] of state.days.entries()) {
+    if (day.appointments.includes(id)) {
+      const newDay = {
+        ...day,
+        spots: day.spots + (booking ? 
+                           (editing ? 0 : -1) : 1),
+      };
+      const days = [...state.days];
+      days.splice(index, 1, newDay);
+      setDays(days);
+    }
+  }
+};
 
 return {state, setDay, bookInterview, cancelInterview}
 }
