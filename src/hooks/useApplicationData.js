@@ -74,7 +74,6 @@ function cancelInterview(id) {
 };
 
 const updateSpots = (id, booking, editing) => {
-  console.log(id, state.days);
   for (const [index, day] of state.days.entries()) {
     if (day.appointments.includes(id)) {
       const newDay = {
