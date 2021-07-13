@@ -64,12 +64,12 @@ function cancelInterview(id) {
     ...state,
     appointments, 
   });
-  return axios.delete(`api/appointments/${id}`, appointments[id])
+  return axios.delete(`api/appointments/${id}`)
     .then(()=>{
       updateSpots(id, false);
       setAppointments(appointments);
-    })
-}
+    });
+};
 
 const updateSpots = (id, booking, editing) => {
   for (const [index, day] of state.days.entries()) {
