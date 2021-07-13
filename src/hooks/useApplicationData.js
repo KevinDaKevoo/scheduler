@@ -12,9 +12,9 @@ const setDay = day => setState({ ...state, day });
 const setDays = days => setState(prev => ({...prev, days}));
 const setAppointments = appointments => setState(prev => ({...prev, appointments}));
 useEffect(() => {
-  const daysURL = 'api/days';
-  const appointmentsURL = 'api/appointments';
-  const interviewersURL = 'api/interviewers';
+  const daysURL = '/api/days';
+  const appointmentsURL = '/api/appointments';
+  const interviewersURL = '/api/interviewers';
   Promise.all([
     axios.get(daysURL),
     axios.get(appointmentsURL),
