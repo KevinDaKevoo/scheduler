@@ -62,12 +62,12 @@ function cancelInterview(id) {
     ...state.appointments,
     [id]: appointment
   };
-  setState({
-    ...state,
-    appointments, 
-  });
   return axios.delete(`api/appointments/${id}`)
     .then(()=>{
+      setState({
+        ...state,
+        appointments, });
+
       updateSpots(id, false);
       setAppointments(appointments);
     });
