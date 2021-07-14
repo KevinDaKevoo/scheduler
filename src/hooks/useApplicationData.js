@@ -89,4 +89,4 @@ const updateSpots = (id, booking, editing) => {
 };
 
 return {state, setDay, bookInterview, cancelInterview}
-}
+};
